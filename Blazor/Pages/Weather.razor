@@ -1,0 +1,58 @@
+﻿@page "/weather"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@using Modelos;
+
+<PageTitle>Starships</PageTitle>
+
+<h1>Starships</h1>
+
+<p>Listado de analisis</p>
+
+@if (starships == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Identificador</th>
+                <th>Descripcion</th>
+                <th>Clasificacion</th>
+                <th>Capacidad Max.</th>
+                <th>Fecha producc.</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var starship in starships)
+            {
+                <tr>
+                    <td>@starship.Identifier</td>
+                    <td>@starship.Description</td>
+                    <td>@starship.Classification</td>
+                    <td>@starship.MaximumAccommodation</td>
+                    <td>@starship.ProductionDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Starship> starships = new List<Starship>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        // Recuperar la lista de starships desde LocalStorage a una variable var
+        var savedStarships = localStorage.GetItem<List<Starship>>("starships");
+
+        // Validar si la lista fue recuperada correctamente, copiarla a la lista
+        if (savedStarships != null)
+        {
+            starships = savedStarships;
+        }
+    }
+}
