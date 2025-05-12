@@ -59,6 +59,36 @@
 
 
 </EditForm>
+@if (starships == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Identificador</th>
+                <th>Descripcion</th>
+                <th>Clasificacion</th>
+                <th>Capacidad Max.</th>
+                <th>Fecha producc.</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var starship in starships)
+            {
+                <tr>
+                    <td>@starship.Identifier</td>
+                    <td>@starship.Description</td>
+                    <td>@starship.Classification</td>
+                    <td>@starship.MaximumAccommodation</td>
+                    <td>@starship.ProductionDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
     private Starship starship = new Starship();
